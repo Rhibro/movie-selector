@@ -12,20 +12,23 @@
 <body>
     <header>
         <h1>Movie Selector</h1>
+            <label for="searchBar" class="seacrhBarLabel">Search by movie title:</label>
+            <input type="text" id="searchBar" class="searchBar"></input>
+            <div id="buttonContainer" class="buttonContainer"></div>
     </header>
  
             <section class="cardDisplay">
                 <section id="movieSection" class="movieSection card">
                         <div class="movieTitle">
-                            <h2>Movies</h2>
+                            <h2>Movies:</h2>
                         </div>
-                        <ul id="movieDisplay" class="movieDisplay"></ul>
+                        <ul id="movieList" class="movieList"></ul>
                 </section>
                 <section id="detailSection" class="detailSection card">
                     <div class="detailTitle">
-                        <h2>Details</h2>
+                        <h2>Details:</h2>
                     </div>
-                    <div id="repoDetail" class="repoDetail"></div>
+                    <div id="movieDetails" class="movieDetails"></div>
                 </section>
             </section>
 
