@@ -12,6 +12,26 @@ body {
     font-family: "Roboto", serif;
 }
 
+::-webkit-scrollbar {
+    width: 20px;
+  }
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #8448AA; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+ ::-webkit-scrollbar-thumb:hover {
+    border: 1px solid black; 
+  }
+
 /* header styles */
 
 header {
@@ -19,19 +39,20 @@ header {
 }
 
 .buttonContainer {
+    overflow-x: auto;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+    white-space: nowrap;
+    padding: 1rem;
 }
 
 button {
-    margin: 5px 5px 5px 5px;
+    margin: 0px 5px 0px 5px; 
     background-color: rgb(126, 160, 246);
     border: 1px solid black;
     border-radius: 5px;
-    font-size: 18px;
+    font-size: 14px;
     padding: 8px;
+    min-width: 100px;
 }
 
 button:hover {
@@ -56,8 +77,8 @@ button:hover {
 }
 
 .movieSection {
-    width: 350px;
-    min-height: 300px;
+    width: 45%;
+    max-height: 500px;
 }
 
 
@@ -72,13 +93,19 @@ li:hover {
 }
 
 .detailSection {
-    width: 500px;
-    min-height: 300px;
+    width: 45%;
+    height: 500px;
+   
 }
 
 h2 {
     padding-left: 1rem;
     font-weight: 300;
+}
+
+img {
+    max-height: 250px;
+    margin-left: 30%;
 }
 
 h3 {
