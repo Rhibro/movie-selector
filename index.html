@@ -3,25 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noticia+Text:ital,wght@0,400;0,700;1,400;1,700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Ropa+Sans:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <title>Movie Selector</title>
 </head>
 <body>
     <header>
         <h1>Movie Selector</h1>
+            <label for="searchBar" class="seacrhBarLabel">Search by movie title:</label>
+            <input type="text" id="searchBar" class="searchBar"></input>
+            <div id="buttonContainer" class="buttonContainer"></div>
     </header>
- 
+    <div id="errorMessageContainer"></div>
             <section class="cardDisplay">
                 <section id="movieSection" class="movieSection card">
                         <div class="movieTitle">
-                            <h2>Movies</h2>
+                            <h2>Movies:</h2>
                         </div>
-                        <ul id="movieDisplay" class="movieDisplay"></ul>
+                        <p id="genreType" class="genreType">Genre: Top Rated</p>
+                        <ul id="movieList" class="movieList"></ul>
+                        <ul id="filteredMovies" class="filteredMovies"></ul>
+                        <div id="paginationControls"></div>
                 </section>
                 <section id="detailSection" class="detailSection card">
                     <div class="detailTitle">
-                        <h2>Details</h2>
+                        <h2>Details:</h2>
                     </div>
-                    <div id="repoDetail" class="repoDetail"></div>
+                    <div id="movieDetails" class="movieDetails"></div>
                 </section>
             </section>
 
@@ -29,6 +39,6 @@
                 <p class="footerText">made by: rhiannon brönnimann 2024</p>
             </footer>
   
-<script src="index.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
