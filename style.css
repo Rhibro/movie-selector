@@ -1,7 +1,7 @@
 * {
     box-sizing: border-box;
-    margin: none;
-    padding: none;
+    /* margin: none;
+    padding: none; */
     overflow-x: hidden;
 }
 
@@ -23,7 +23,7 @@ body {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #8448AA; 
+    background: #a989e1; 
     border-radius: 10px;
     cursor: pointer;
   }
@@ -37,6 +37,13 @@ body {
 
 header {
     padding-bottom: 2rem;
+}
+
+.searchBar {
+    border-radius: 5px;
+    border: 1px solid black;
+    min-height: 30px;
+    background-color: #DBB0D0;
 }
 
 .buttonContainer {
@@ -114,14 +121,16 @@ img {
 
 h3 {
     padding-left: 1rem;
-    font-weight: 400;
-    text-decoration: underline;
+    font-weight: 800;
 }
 
 p {
     padding-left: 1rem;
     padding-right: 1rem;
+}
 
+.pageNumber {
+    margin-left: 1rem;
 }
 
 /* footer styles */
@@ -133,4 +142,30 @@ footer {
     justify-content: center;
     align-items: center; 
     bottom: 0;
+}
+
+/* media queries */
+
+@media screen and (max-width: 656px) {
+
+    .movieSection {
+        width: 90%;
+        height: 200px;
+    }
+
+    .detailSection {
+        width: 90%;
+        height: 500px;
+    }
+
+    li {
+        font-size: 18px;
+        text-decoration: none;
+    }
+
+    .img {
+        max-height: 150px;
+        margin-left: 5%;
+    }
+
 }
