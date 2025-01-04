@@ -28,6 +28,7 @@ https://www.figma.com/design/fCCvWAhkVEAq9980ws9Kwb/Movie-Selector?node-id=0-1&p
 <h2>JSON and HTTP/HTTPS</h2>
 API Used: The Movie Database (TMDb)
 Endpoints:
+ 
  Top-Rated Movies: https://api.themoviedb.org/3/movie/top_rated
 
  Genres List: https://api.themoviedb.org/3/genre/movie/list
