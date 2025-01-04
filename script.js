@@ -2,6 +2,80 @@ const apiKey = "4291752680fb18b8f286cc679c1e1d8e";
 const baseUrl =  "https://api.themoviedb.org/3"; //`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`;
 const genreApiUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`;
 
+let currentPage = 1; // Track the current page
+const moviesPerPage = 10; // Number of movies to load per page
+let totalMoviesLoaded = 0; // Track the total number of movies loaded
+
+// Function to fetch top-rated movies
+async function fetchTopRatedMovies(page) {
+  const url = `${baseUrl}/movie/top_rated?api_key=${apiKey}&page=${page}`;
+  
+  console.log(`Fetching top-rated movies from: ${url}`); // Log the URL being fetched
+
+  try {
+    const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log("API Response:", data);
+      if (data.results && Array.isArray(data.results)) {
+        displayMovies(data.results);
+      } else {
+        console.error("No results found in the API response.");
+      }
+    } catch(error) { 
+      console.error("Error fetching movies:", error);
+    }
+}
+
+// Function to display movies on the page
+function displayMovies(movies) {
+  const movieList = document.getElementById('movieList');
+
+   // Check if movies are being passed correctly
+   console.log("Movies to display:", movies); // Log the movies being displayed
+  
+  // Append only the first 10 movies from the fetched results
+  const moviesToDisplay = movies.slice(0, moviesPerPage);
+  moviesToDisplay.forEach(movie => {
+    const movieItem = document.createElement('li');
+    movieItem.textContent = `${movie.title} (rating: ${movie.vote_average})`;
+    movieItem.addEventListener('click', () => {
+      displayMovieDetails(movie);
+    });
+    movieList.appendChild(movieItem);
+  });
+
+  // Update the total movies loaded
+  totalMoviesLoaded += moviesToDisplay.length;
+}
+
+// Function to load initial movies
+function fetchInitialMovies() {
+  console.log("Fetching initial top-rated movies..."); // Log when fetching initial movies
+  fetchTopRatedMovies(currentPage);
+}
+
+// Function to handle scroll event for pagination
+function handleScroll() {
+  const movieSection = document.getElementById('movieSection');
+  const scrollPosition = movieSection.scrollTop + movieSection.clientHeight;
+  const threshold = movieSection.scrollHeight - 200; // Load more when near the bottom
+
+  if (scrollPosition >= threshold && totalMoviesLoaded % moviesPerPage === 0) {
+    currentPage++; // Increment the page number
+    fetchTopRatedMovies(currentPage); // Fetch more movies
+  }
+}
+
+// Initialize the app
+document.addEventListener("DOMContentLoaded", () => {
+  fetchInitialMovies(); // Fetch initial movies on page load
+  const movieSection = document.getElementById('movieSection');
+  movieSection.addEventListener('scroll', handleScroll); // Add scroll event listener to movieSection
+});
+
 let genreMap = {};
 
 // Fetch genres and populate genreMap
@@ -103,15 +177,5 @@ createGenreButtons();
 
 // function displayMovies() {}
 
-// function movieDetails() {
-
-//     movieItem.addEventListener('click', () => {
-//         movieDetail.innerHTML = '';
-//         movieDetail.innerHTML = '<p>Loading...</p>';
-
-//         fetch(movie.overview)
-//     })
-
-// }
 
 // function searchTitle() {}

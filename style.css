@@ -25,6 +25,7 @@ body {
 ::-webkit-scrollbar-thumb {
     background: #8448AA; 
     border-radius: 10px;
+    cursor: pointer;
   }
   
   /* Handle on hover */
@@ -53,6 +54,7 @@ button {
     font-size: 14px;
     padding: 8px;
     min-width: 100px;
+    cursor: pointer;
 }
 
 button:hover {
@@ -78,7 +80,7 @@ button:hover {
 
 .movieSection {
     width: 45%;
-    max-height: 500px;
+    height: 500px;
 }
 
 
@@ -86,6 +88,7 @@ li {
     margin-top: 1rem;
     font-size: 20px;
     font-weight: 300;
+    cursor: pointer;
 }
 
 li:hover {
