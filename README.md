@@ -7,7 +7,8 @@ Instructions to run it locally:
 3. Open the application: run in VScode live server
 
 <h2>Project Features</h2>
-View Movies: Displays a list of top-rated movies by default (10 movies per page).
+
+View Movies: Displays a list of top-rated movies by default.
 
 Search by Title: Enter a movie title in the search bar to find matching movies.
 
