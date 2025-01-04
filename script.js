@@ -68,7 +68,7 @@ function displayMovies(movies) {
   });
 
   // Update the total movies loaded
-  totalMoviesLoaded += moviesToDisplay.length;
+  totalMoviesLoaded += movies.length;
 }
 
 // Function to load initial movies
@@ -88,8 +88,8 @@ function handlePageChange(increment) {
   }
 
   // Update page number display
-  const pageNumberDisplay = document.getElementById('pageNumber');
-  pageNumberDisplay.textContent = `Page ${currentPage}`;
+  // const pageNumberDisplay = document.getElementById('pageNumber');
+  // pageNumberDisplay.textContent = `Page ${currentPage}`;
 }
 
 // function handlePagination(page) {
