@@ -2,9 +2,11 @@ const apiKey = "4291752680fb18b8f286cc679c1e1d8e";
 const baseUrl =  "https://api.themoviedb.org/3"; //`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`;
 const genreApiUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`;
 
+let genreMap = {};
+
 let currentPage = 1; // Track the current page
 const moviesPerPage = 10; // Number of movies to load per page
-let currentMode = 'topRated';
+let currentMode = 'topRated'; // switching between modes for pagination 
 let totalMoviesLoaded = 0; // Track the total number of movies loaded
 
 // Function to fetch top-rated movies
@@ -15,7 +17,7 @@ async function fetchTopRatedMovies(page) {
   try {
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      displayError(`HTTP error! status: ${response.status}`); 
     }
     const data = await response.json();
     if (data.results && Array.isArray(data.results)) {
@@ -49,26 +51,31 @@ async function fetchMoviesByGenre(genreId, page) {
   }
 }
 
+
 // Function to display movies on the page
 function displayMovies(movies) {
   const movieList = document.getElementById('movieList');
-  movieList.innerHTML = '';
+  movieList.innerHTML = ''; // Clear previous movies to only show the current page's movies
+  
+  // Check if movies are being passed correctly
+  console.log("Movies to display:", movies); // Log the movies being displayed
 
-   // Check if movies are being passed correctly
-   console.log("Movies to display:", movies); // Log the movies being displayed
-
-  // Append the fetched movies as list items
-  movies.forEach(movie => {
+  // Append only the first 10 movies from the fetched results
+  const moviesToDisplay = movies.slice(0, moviesPerPage); // Ensure only 10 movies are displayed
+  moviesToDisplay.forEach(movie => {
     const movieItem = document.createElement('li');
     movieItem.textContent = `${movie.title} (rating: ${movie.vote_average})`;
     movieItem.addEventListener('click', () => {
-      displayMovieDetails(movie); // Click handler for displaying details
+      displayMovieDetails(movie);
     });
     movieList.appendChild(movieItem);
   });
 
   // Update the total movies loaded
-  totalMoviesLoaded += movies.length;
+  totalMoviesLoaded += moviesToDisplay.length;
+
+  // Log the total movies loaded
+  console.log(`Total movies loaded: ${totalMoviesLoaded}`);
 }
 
 // Function to load initial movies
@@ -81,29 +88,39 @@ async function fetchInitialMovies() {
 // Function to handle page change (Previous/Next)
 function handlePageChange(increment) {
   currentPage += increment;
+
+  // Ensure the page number stays valid
+  if (currentPage < 1) currentPage = 1;
+
   if (currentMode === 'topRated') {
     fetchTopRatedMovies(currentPage);
   } else {
     fetchMoviesByGenre(currentMode, currentPage);
   }
 
-  // Update page number display
-  // const pageNumberDisplay = document.getElementById('pageNumber');
-  // pageNumberDisplay.textContent = `Page ${currentPage}`;
+   // Update page number display
+   const pageNumberDisplay = document.getElementById('pageNumber');
+   if (pageNumberDisplay) {
+       pageNumberDisplay.textContent = `Page ${currentPage}`;
+   }
+
+  createPaginationControls();
 }
 
-// function handlePagination(page) {
-//   // Fetch movies for the current page
-//   if (currentMode === 'topRated') {
-//     fetchTopRatedMovies(page);
-//   } else {
-//     fetchMoviesByGenre(currentMode, page);
-//   }
 
-//   // Scroll the page to the top after updating the movie list
-//   const movieList = document.getElementById('movieList');
-//   movieList.scrollIntoView({ behavior: 'smooth', block: 'start' });
-// }
+function handlePagination(page) {
+  // Fetch movies for the current page
+  if (currentMode === 'topRated') {
+    fetchTopRatedMovies(page);
+  } else {
+    fetchMoviesByGenre(currentMode, page);
+  }
+
+  // Scroll the page to the top after updating the movie list
+  const movieList = document.getElementById('movieList');
+  movieList.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 
 // Pagination buttons to navigate through pages
 function createPaginationControls() {
@@ -115,38 +132,24 @@ function createPaginationControls() {
   // Create Previous button
   const prevButton = document.createElement('button');
   prevButton.textContent = 'Previous';
-  // prevButton.disabled = currentPage === 1; // Disable if on the first page
+  prevButton.disabled = currentPage === 1; // Disable if on the first page
   prevButton.addEventListener('click', () => handlePageChange(-1));
-  // prevButton.onclick = () => {
-  //   if (currentPage > 1) {
-  //     currentPage--;
-  //     handlePagination(currentPage);
-  //   }
-  // };
   
   // Create Next button
   const nextButton = document.createElement('button');
   nextButton.textContent = 'Next';
   nextButton.addEventListener('click', () => handlePageChange(1));
-  // nextButton.onclick = () => {
-  //   if (totalMoviesLoaded >= moviesPerPage) {
-  //     currentPage++;
-  //     handlePagination(currentPage);
-  //   }
-  // };
   
   // Append buttons to pagination container
   paginationContainer.appendChild(prevButton);
   paginationContainer.appendChild(nextButton);
 }
 
-let genreMap = {};
 
 // Fetch genres and populate genreMap
 async function fetchAndBuildGenreMap() {
-  // fetch(genreApiUrl)
     try {
-      const response = await fetch(genreApiUrl);
+      const response = await fetch(genreApiUrl); 
       if(!response.ok) {
         throw new Error(`Failed to fecth genre. HTTP status: ${response.status}`);
       }
@@ -171,6 +174,7 @@ async function fetchAndBuildGenreMap() {
   }
 }
 
+
   function createGenreButtons() {
     const buttonContainer = document.getElementById('buttonContainer');
     buttonContainer.innerHTML = ""; // Clear any existing buttons
@@ -188,6 +192,7 @@ async function fetchAndBuildGenreMap() {
     });
   }
 
+
 // Filter movies by genre 
 async function filterMoviesByGenre(genreId, genreName) {
 
@@ -201,8 +206,14 @@ async function filterMoviesByGenre(genreId, genreName) {
   const movieList = document.getElementById('movieList');
   movieList.innerHTML = ""; // Clear the movie list
 
+  const pageNumberDisplay = document.getElementById('pageNumber'); // Update the page number display
+    if (pageNumberDisplay) {
+        pageNumberDisplay.textContent = `Page ${currentPage}`;
+    }
+
   await fetchMoviesByGenre(genreId, currentPage); // Fetch movies for the selected genre
 } 
+
 
 // Reset to top-rated movies
 async function showTopRatedMovies() {
@@ -228,7 +239,7 @@ function displayMovieDetails(movie) {
     
     try {
     // Construct poster URL
-    const posterUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+    const posterUrl =  `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
 
     const image = document.createElement('img')
     image.src = posterUrl;
@@ -254,6 +265,7 @@ function displayMovieDetails(movie) {
 
 // Function to search movies by title
 async function searchMoviesByTitle(query) {
+  console.log(`Searching for movies with title: ${query}`); // Debug log
   const url = `${baseUrl}/search/movie?api_key=${apiKey}&query=${encodeURIComponent(query)}&page=${currentPage}`;
 
   try {
@@ -265,7 +277,7 @@ async function searchMoviesByTitle(query) {
     const data = await response.json();
     if (data.results && Array.isArray(data.results)) {
       displayMovies(data.results); // Display the movies from the search result
-    } else {
+    } else if (!data.results || data.results.length === 0) {
       displayError("No matches found for your search.");
     }
   } catch (error) {
@@ -273,15 +285,22 @@ async function searchMoviesByTitle(query) {
   }
 }
 
+
 // Function to handle search input
 function handleSearchInput(event) {
   const query = event.target.value.trim();
+
+  // Clear the error message container
+  const errorMessageContainer = document.getElementById('errorMessageContainer');
+  errorMessageContainer.innerHTML = ''; // Clear existing error message
   
   // If the input is not empty, perform the search
   if (query) {
+    console.log("Searching for movies with title:", query);
     searchMoviesByTitle(query);
   } else {
     // If the input is empty, reset to show top-rated movies
+    console.log("Search input cleared. Resetting to top-rated movies.");
     showTopRatedMovies();
   }
 }
@@ -289,9 +308,16 @@ function handleSearchInput(event) {
 // Attach the search input event listener to the search bar
 document.getElementById('searchBar').addEventListener('input', handleSearchInput);
 
+
 // Function to display error messages
 async function displayError(message, delay = 0) {
   const movieList = document.getElementById('errorMessageContainer');
+
+  if (!movieList) {
+    console.error("Error: 'errorMessageContainer' element not found!");
+    return;
+  }
+
   movieList.innerHTML = ""; // Clear any existing content
 
   if (delay > 0) {
@@ -302,18 +328,16 @@ async function displayError(message, delay = 0) {
   errorMessage.textContent = message;
   errorMessage.style.color = 'red';
   movieList.appendChild(errorMessage);
+  console.log(`Error message displayed: ${message}`); // Debug log
 }
+
 
   // Initialize the app
 document.addEventListener("DOMContentLoaded", () => {
   showTopRatedMovies();
   fetchAndBuildGenreMap();
   fetchInitialMovies();
-
-  // const movieSection = document.getElementById('movieSection');
-  // movieSection.addEventListener('scroll', handleScroll); 
-
   createPaginationControls(); // Initialize pagination controls
 });
 
-// function searchTitle() {}
+
