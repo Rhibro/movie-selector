@@ -14,6 +14,8 @@ async function fetchTopRatedMovies(page) {
   const url = `${baseUrl}/movie/top_rated?api_key=${apiKey}&page=${page}`;
   console.log(`Fetching top-rated movies from: ${url}`); // Log the URL being fetched
 
+  showLoading(); // Show loading indicator
+
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -27,12 +29,16 @@ async function fetchTopRatedMovies(page) {
     }
   } catch (error) {
     console.error("Error fetching movies:", error);
+  } finally {
+    hideLoading(); // Hide loading indicator
   }
 }
 
 // Function to fetch movies by genre with pagination
 async function fetchMoviesByGenre(genreId, page) {
   const url = `${baseUrl}/discover/movie?api_key=${apiKey}&with_genres=${genreId}&page=${page}`;
+
+  showLoading(); // Show loading indicator
 
   try {
     const response = await fetch(url);
@@ -48,7 +54,9 @@ async function fetchMoviesByGenre(genreId, page) {
     }
   } catch (error) {
     console.error("Error fetching movies by genre:", error);
-  }
+  } finally {
+    hideLoading(); // Hide loading indicator
+}
 }
 
 
@@ -234,8 +242,7 @@ async function showTopRatedMovies() {
 function displayMovieDetails(movie) {
     const movieDetails = document.getElementById('movieDetails');
     
-    // Clear any previous details
-    movieDetails.innerHTML = '<p>Loading...</p>';
+    showLoading(); // Show loading indicator
     
     try {
     // Construct poster URL
@@ -260,7 +267,9 @@ function displayMovieDetails(movie) {
   } catch {
     displayError("Failed to load movie details. Please try again.");
     console.error("Error displaying movie details:", error);
-  }
+  } finally {
+    hideLoading(); // Hide loading indicator
+}
 }
 
 // Function to search movies by title
@@ -302,7 +311,7 @@ function handleSearchInput(event) {
     // If the input is empty, reset to show top-rated movies
     console.log("Search input cleared. Resetting to top-rated movies.");
     showTopRatedMovies();
-  }
+  } 
 }
 
 // Attach the search input event listener to the search bar
@@ -329,6 +338,20 @@ async function displayError(message, delay = 0) {
   errorMessage.style.color = 'red';
   movieList.appendChild(errorMessage);
   console.log(`Error message displayed: ${message}`); // Debug log
+}
+
+// loading indicator
+function showLoading() {
+  const loadingIndicator = document.getElementById('loadingIndicator');
+  if (loadingIndicator) {
+      loadingIndicator.style.display = 'block';
+  }
+}
+function hideLoading() {
+  const loadingIndicator = document.getElementById('loadingIndicator');
+  if (loadingIndicator) {
+      loadingIndicator.style.display = 'none';
+  }
 }
 
 
