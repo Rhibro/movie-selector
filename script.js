@@ -4,7 +4,7 @@ const genreApiUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=${api
 
 let currentPage = 1; // Track the current page
 const moviesPerPage = 10; // Number of movies to load per page
-let currentMode = 'topRated';
+let currentMode = 'topRated'; // switching between modes for pagination 
 let totalMoviesLoaded = 0; // Track the total number of movies loaded
 
 // Function to fetch top-rated movies
