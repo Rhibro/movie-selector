@@ -34,6 +34,12 @@ async function fetchTopRatedMovies(page) {
   }
 }
 
+// Function to load initial movies
+async function fetchInitialMovies() {
+  console.log("Fetching initial top-rated movies..."); // Log when fetching initial movies
+  await fetchTopRatedMovies(currentPage);
+}
+
 // Function to fetch movies by genre with pagination
 async function fetchMoviesByGenre(genreId, page) {
   const url = `${baseUrl}/discover/movie?api_key=${apiKey}&with_genres=${genreId}&page=${page}`;
@@ -84,12 +90,6 @@ function displayMovies(movies) {
 
   // Log the total movies loaded
   console.log(`Total movies loaded: ${totalMoviesLoaded}`);
-}
-
-// Function to load initial movies
-async function fetchInitialMovies() {
-  console.log("Fetching initial top-rated movies..."); // Log when fetching initial movies
-  await fetchTopRatedMovies(currentPage);
 }
 
 
@@ -194,8 +194,7 @@ async function fetchAndBuildGenreMap() {
 
       const button = document.createElement('button');
       button.textContent = genreName;
-      // button.textContent = genre.replace(/_/g, ' ');
-      button.onclick = () => filterMoviesByGenre(genreId, genreName)//(genreMap[genre]); // Attach click handler
+      button.onclick = () => filterMoviesByGenre(genreId, genreName) // Attach click handler
       buttonContainer.appendChild(button);
     });
   }

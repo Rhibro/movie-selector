@@ -8,7 +8,6 @@
 body {
     background: rgb(238,174,202);
     background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
-    /* height: 100vh; */
     font-family: "Roboto", serif;
 }
 
@@ -85,11 +84,12 @@ button:hover {
     margin: 1rem;
 }
 
+/* movie section styles */
+
 .movieSection {
     width: 45%;
     height: 600px;
 }
-
 
 li {
     margin-top: 1rem;
@@ -103,10 +103,11 @@ li:hover {
 }
 
 
+/* detail section styles */
+
 .detailSection {
     width: 45%;
     height: 600px;
-   
 }
 
 h2 {
@@ -128,6 +129,8 @@ p {
     padding-left: 1rem;
     padding-right: 1rem;
 }
+
+/* pagination styles */
 
 .pagBox {
     display: flex;
