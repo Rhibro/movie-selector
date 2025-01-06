@@ -305,14 +305,14 @@ document.getElementById('searchBar').addEventListener('input', handleSearchInput
 
 // Function to display error messages
 async function displayError(message, delay = 0) {
-  const movieList = document.getElementById('errorMessageContainer');
+  const errorContainer = document.getElementById('errorMessageContainer');
 
-  if (!movieList) {
+  if (!errorContainer) {
     console.error("Error: 'errorMessageContainer' element not found!");
     return;
   }
 
-  movieList.innerHTML = ""; // Clear any existing content
+  errorContainer.innerHTML = ""; // Clear any existing content
 
   if (delay > 0) {
     await new Promise(resolve => setTimeout(resolve, delay));
@@ -321,7 +321,7 @@ async function displayError(message, delay = 0) {
   const errorMessage = document.createElement('p');
   errorMessage.textContent = message;
   errorMessage.style.color = 'red';
-  movieList.appendChild(errorMessage);
+  errorContainer.appendChild(errorMessage);
   console.log(`Error message displayed: ${message}`); // Debug log
 }
 
