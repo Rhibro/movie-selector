@@ -155,6 +155,21 @@ footer {
     bottom: 0;
 }
 
+
+/* Thank you page styles */
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+a {
+    text-decoration: underline;
+    color: black;
+}
+
 /* media queries */
 
 @media screen and (max-width: 656px) {
@@ -188,3 +203,4 @@ footer {
     }
 
 }
+
