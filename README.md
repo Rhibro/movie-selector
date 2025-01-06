@@ -40,6 +40,7 @@ Endpoints:
 API Key: A unique API key is required to authenticate requests
 
 Parameters:
+
  page: Current page for pagination.
 
  with_genres: Genre ID for filtering movies.
@@ -55,15 +56,21 @@ Error Handling:
 
 <h2>UX/UI Considerations</h2>
 WCAG Compliance:
+
  Alt text for images.
 
  Semantic HTML structure with proper headings and containers.
+ 
  Sufficient color contrast for readability.
+
 Feedback Mechanisms:
  
  Loading indicators while fetching movie details.
  
  Clear feedback for invalid searches or empty genres.
+
+Lighthouse test showed 100% on accessibility 
+Wave test showed no errors, contrast issues, or alerts.  
 
 Responsive Design:
  Layout adapts seamlessly to different screen sizes.
@@ -71,7 +78,7 @@ Responsive Design:
 <h2>How to Navigate and Use the Application</h2>
 Home Page:
 Automatically displays top-rated movies with pagination controls.
-Scroll through the list or navigate using the "Next" and "Previous" buttons.
+Navigate using the "Next" and "Previous" buttons.
 
 Search Movies:
 Type in the search bar to look for movies by title.
@@ -83,9 +90,11 @@ Click a button to filter movies for that genre.
 
 View Movie Details:
 Click any movie in the list to view its details, including:
-Poster.
-Title.
-Overview (short description).
+Poster
+Title
+Overview (short description)
 
 Error Handling:
 If an issue occurs (e.g., no results found or network error), a clear message will display at the top of the page.
+
+
