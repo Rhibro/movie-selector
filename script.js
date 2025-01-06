@@ -116,20 +116,6 @@ function handlePageChange(increment) {
 }
 
 
-function handlePagination(page) {
-  // Fetch movies for the current page
-  if (currentMode === 'topRated') {
-    fetchTopRatedMovies(page);
-  } else {
-    fetchMoviesByGenre(currentMode, page);
-  }
-
-  // Scroll the page to the top after updating the movie list
-  const movieList = document.getElementById('movieList');
-  movieList.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-
 // Pagination buttons to navigate through pages
 function createPaginationControls() {
   const paginationContainer = document.getElementById('paginationControls');
@@ -359,7 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
   showTopRatedMovies();
   fetchAndBuildGenreMap();
   fetchInitialMovies();
-  createPaginationControls(); // Initialize pagination controls
+  createPaginationControls(); 
 });
 
 
