@@ -314,6 +314,7 @@ async function displayError(message, delay = 0) {
 
   errorContainer.innerHTML = ""; // Clear any existing content
 
+
   if (delay > 0) {
     await new Promise(resolve => setTimeout(resolve, delay));
   }
@@ -341,11 +342,26 @@ function hideLoading() {
 
 
   // Initialize the app
-document.addEventListener("DOMContentLoaded", () => {
-  showTopRatedMovies();
-  fetchAndBuildGenreMap();
-  fetchInitialMovies();
-  createPaginationControls(); 
-});
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    showLoading();
+
+    await Promise.all([
+      showTopRatedMovies(),
+      fetchAndBuildGenreMap(),
+      fetchInitialMovies()
+    ]);
+
+    createPaginationControls();  // Create pagination after data is loaded
+
+  } catch (error) {
+    console.log('Error during initialization:', error);
+    displayError('Failed to initialize the app. Please refresh the page.');
+  } finally {
+    hideLoading();
+  }
+
+  });
+ 
 
 
