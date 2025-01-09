@@ -97,4 +97,5 @@ Overview (short description)
 Error Handling:
 If an issue occurs (e.g., no results found or network error), a clear message will display at the top of the page.
 
+Added Promise.all to my DOMContentLoaded event listener because I use it to initialize multiple async functions, now they can run simultaneously and speed up the initialization. 
 
