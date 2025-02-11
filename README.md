@@ -22,8 +22,7 @@ Responsive Design: Optimized for mobile, tablet, and desktop devices.
 
 Error Handling: Clear error messages for invalid searches, network issues, or unexpected API responses.
 
-<h2>Figma Design</h2>
-https://www.figma.com/design/fCCvWAhkVEAq9980ws9Kwb/Movie-Selector?node-id=0-1&p=f&t=Ma6SzbBMMwSfb2W7-0
+<img width="959" alt="movie-selector-home" src="https://github.com/user-attachments/assets/e6aeeffc-f58b-44c3-8765-6d2deff57985" />
 
 <h2>JSON and HTTP/HTTPS</h2>
 API Used: The Movie Database (TMDb)
